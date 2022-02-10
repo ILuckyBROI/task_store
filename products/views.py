@@ -25,5 +25,10 @@ def products(request):
                     'img': '/static/vendor/img/products/kraftool-set.jpg'},
 
                ],
+               'groups': [{'name': 'Новинки'}, {'name': 'Инструменты'}, {'name': 'Изоляционные материалы'}, {
+                   'name': 'Кровля'}, {'name': 'Краски'}, {'name': 'Напольные плинтусы, пороги и аксессуары'},
+                              {'name': 'Скобяные изделия'}, {'name': 'Сухие смеси и грунтовки'},
+                              {'name': 'Строительные расходные материалы'}, {'name': 'Электротовары'},
+                              ],
                }
     return render(request, 'products/products.html', context)
