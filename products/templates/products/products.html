@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Building material - Каталог</title>
+    <title>{{ title }}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -23,7 +23,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'index'%}">Build material</a>
+        <a class="navbar-brand" href="{% url 'index' %}">Build material</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -137,121 +137,26 @@
             </div>
 
             <div class="row">
-
+                {% for product in products %}
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
                         <a href="#">
                             <img class="card-img-top"
-                                 src="/static/vendor/img/products/TIM35.jpg" alt="">
+                                 src="{{ product.img }}" alt="">
                         </a>
                         <div class="card-body">
                             <h4 class="card-title">
-                                <a href="#">ТиМ №35, 25 кг</a>
+                                <a href="#">{{ product.name }}</a>
                             </h4>
-                            <h5>360,00 руб.</h5>
-                            <p class="card-text">Есть в наличии</p>
+                            <h5>{{ product.price }} руб.</h5>
+                            <p class="card-text">{{ product.availability }}</p>
                         </div>
                         <div class="card-footer text-center">
                             <button type="button" class="btn btn-outline-success">Отправить в корзину</button>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <a href="#">
-                            <img class="card-img-top"
-                                 src="/static/vendor/img/products/habez-start.jpg" alt="">
-                        </a>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <a href="#">HABEZ Start 30 кг</a>
-                            </h4>
-                            <h5>725,00 руб.</h5>
-                            <p class="card-text">Есть в наличии</p>
-                        </div>
-                        <div class="card-footer text-center">
-                            <button type="button" class="btn btn-outline-danger">Удалить из корзины</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <a href="#">
-                            <img class="card-img-top"
-                                 src="/static/vendor/img/products/ceresit-cm11.jpg" alt="">
-                        </a>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <a href="#">Ceresit CM17 5 кг</a>
-                            </h4>
-                            <h5>990,00 руб.</h5>
-                            <p class="card-text">Есть в наличии</p>
-                        </div>
-                        <div class="card-footer text-center">
-                            <button type="button" class="btn btn-outline-success">Отправить в корзину</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <a href="#">
-                            <img class="card-img-top"
-                                 src="/static/vendor/img/products/zubr-drill.jpg" alt="">
-                        </a>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <a href="#">Ударная дрель ЗУБР ДУ-810</a>
-                            </h4>
-                            <h5>3 230,00 руб.</h5>
-                            <p class="card-text">Есть в наличии</p>
-                        </div>
-                        <div class="card-footer text-center">
-                            <button type="button" class="btn btn-outline-success">Отправить в корзину</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <a href="#">
-                            <img class="card-img-top"
-                                 src="/static/vendor/img/products/zubr-mixer.jpg" alt="">
-                        </a>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <a href="#">Миксер ЗУБР МР-1400-2</a>
-                            </h4>
-                            <h5>11 360,00 руб.</h5>
-                            <p class="card-text">Есть в наличии</p>
-                        </div>
-                        <div class="card-footer text-center">
-                            <button type="button" class="btn btn-outline-success">Отправить в корзину</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <a href="#">
-                            <img class="card-img-top"
-                                 src="/static/vendor/img/products/kraftool-set.jpg" alt="">
-                        </a>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <a href="#">Набор инструментов KRAFTOOL</a>
-                            </h4>
-                            <h5>1 999,99 руб</h5>
-                            <p class="card-text">Есть в наличии</p>
-                        </div>
-                        <div class="card-footer text-center">
-                            <button type="button" class="btn btn-outline-success">Отправить в корзину</button>
-                        </div>
-                    </div>
-                </div>
-
+                {% endfor %}
             </div>
 
             <nav aria-label="Page navigation example">
@@ -271,7 +176,6 @@
         </div>
 
     </div>
-
 </div>
 <!-- /.container -->
 
