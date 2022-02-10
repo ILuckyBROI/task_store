@@ -1,15 +1,15 @@
 from django.shortcuts import render
-
+import datetime
 
 # Create your views here.
 
 def index(request):
-    context = {'title': 'Building material'}
+    context = {'title': 'building material'}
     return render(request, 'products/index.html', context)
 
 
 def products(request):
-    context = {'title': 'BM - Каталог',
+    context = {'title': 'bm - Каталог',
                'products': [
                    {'name': 'Тим №35 25 кг', 'price': 360, 'availability': "Есть в наличии",
                     'img': '/static/vendor/img/products/TIM35.jpg'},
@@ -23,12 +23,13 @@ def products(request):
                     'img': '/static/vendor/img/products/zubr-mixer.jpg'},
                    {'name': 'Набор инструментов KRAFTOOL', 'price': 1999, 'availability': "Есть в наличии",
                     'img': '/static/vendor/img/products/kraftool-set.jpg'},
-
                ],
                'groups': [{'name': 'Новинки'}, {'name': 'Инструменты'}, {'name': 'Изоляционные материалы'}, {
                    'name': 'Кровля'}, {'name': 'Краски'}, {'name': 'Напольные плинтусы, пороги и аксессуары'},
-                              {'name': 'Скобяные изделия'}, {'name': 'Сухие смеси и грунтовки'},
-                              {'name': 'Строительные расходные материалы'}, {'name': 'Электротовары'},
-                              ],
+                          {'name': 'Скобяные изделия'}, {'name': 'Сухие смеси и грунтовки'},
+                          {'name': 'Строительные расходные материалы'}, {'name': 'Электротовары'},
+                          ],
+               'start': datetime.datetime(2022, 2, 3, 19, 0),
+               'now': datetime.datetime(2022, 2, 10, 19, 0),
                }
     return render(request, 'products/products.html', context)
