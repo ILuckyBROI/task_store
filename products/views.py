@@ -1,8 +1,8 @@
-from django.shortcuts import render
-from django.conf import settings
-import json
 import datetime
-from .models import ProductCategory
+
+from django.conf import settings
+from django.shortcuts import render
+from products.models import Product, ProductCategory
 
 
 # Create your views here.
@@ -16,8 +16,7 @@ def index(request):
 
 
 def products(request):
-    Categoryj = settings.BASE_DIR / 'products/fixtures/Categories.json'
-    Productsj = settings.BASE_DIR / 'products/fixtures/Products.json'
+    productsj = settings.BASE_DIR / 'products/fixtures/Products.json'
     context = {'title': 'bm - Каталог',
                # 'products': [
                #     {'name': 'Тим №35 25 кг', 'price': 360, 'availability': "Есть в наличии",
@@ -38,8 +37,8 @@ def products(request):
                #            {'name': 'Скобяные изделия'}, {'name': 'Сухие смеси и грунтовки'},
                #            {'name': 'Строительные расходные материалы'}, {'name': 'Электротовары'},
                #            ],
-               'groups': json.load(open(Categoryj, encoding='utf-8')),
-               'products': json.load(open(Productsj, encoding='utf-8')),
+               'groups': ProductCategory.objects.all(),
+               'products': Product.objects.all(),
                'start': datetime.datetime(2022, 2, 3, 19, 0),
                'now': datetime.datetime.now(),
                }
