@@ -1,0 +1,74 @@
+[
+  {
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+      "name": "Тим №35 25 кг",
+      "image": "/product_images/kraftool-set_KG6MosK.jpg",
+      "availability": "Есть в наличии",
+      "price": "360.00",
+      "quantity": 1,
+      "category": 8
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+      "name": "HABEZ Start 30 кг",
+      "image": "/media/product_images/habez-start.jpg",
+      "availability": "Есть в наличии",
+      "price": "725.00",
+      "quantity": 1,
+      "category": 8
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+      "name": "Ceresit CM17 5 кг",
+      "image": "/media/product_images/ceresit-cm11.jpg",
+      "availability": "Есть в наличии",
+      "price": "990.00",
+      "quantity": 1,
+      "category": 8
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+      "name": "Ударная дрель ЗУБР ДУ-810",
+      "image": "/media/product_images/zubr-drill.jpg",
+      "availability": "Есть в наличии",
+      "price": "3230.00",
+      "quantity": 1,
+      "category": 10
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+      "name": "Миксер ЗУБР МР-1400-2",
+      "image": "/media/product_images/zubr-mixer.jpg",
+      "availability": "Есть в наличии",
+      "price": "11360.00",
+      "quantity": 1,
+      "category": 10
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 6,
+    "fields": {
+      "name": "Набор инструментов KRAFTOOL",
+      "image": "/media/product_images/kraftool-set.jpg",
+      "availability": "Есть в наличии",
+      "price": "1999.00",
+      "quantity": 1,
+      "category": 2
+    }
+  }
+]

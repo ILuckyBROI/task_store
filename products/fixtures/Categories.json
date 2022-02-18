@@ -1,0 +1,82 @@
+[
+  {
+    "model": "products.productcategory",
+    "pk": 1,
+    "fields": {
+      "name": "Новинки",
+      "discription": ""
+    }
+  },
+  {
+    "model": "products.productcategory",
+    "pk": 2,
+    "fields": {
+      "name": "Инструменты",
+      "discription": ""
+    }
+  },
+  {
+    "model": "products.productcategory",
+    "pk": 3,
+    "fields": {
+      "name": "Изоляционные материалы",
+      "discription": ""
+    }
+  },
+  {
+    "model": "products.productcategory",
+    "pk": 4,
+    "fields": {
+      "name": "Кровля",
+      "discription": ""
+    }
+  },
+  {
+    "model": "products.productcategory",
+    "pk": 5,
+    "fields": {
+      "name": "Краски",
+      "discription": ""
+    }
+  },
+  {
+    "model": "products.productcategory",
+    "pk": 6,
+    "fields": {
+      "name": "Напольные плинтусы, пороги и аксессуары",
+      "discription": ""
+    }
+  },
+  {
+    "model": "products.productcategory",
+    "pk": 7,
+    "fields": {
+      "name": "Скобяные изделия",
+      "discription": ""
+    }
+  },
+  {
+    "model": "products.productcategory",
+    "pk": 8,
+    "fields": {
+      "name": "Сухие смеси и грунтовки",
+      "discription": ""
+    }
+  },
+  {
+    "model": "products.productcategory",
+    "pk": 9,
+    "fields": {
+      "name": "Строительные расходные материалы",
+      "discription": ""
+    }
+  },
+  {
+    "model": "products.productcategory",
+    "pk": 10,
+    "fields": {
+      "name": "Электротовары",
+      "discription": ""
+    }
+  }
+]
