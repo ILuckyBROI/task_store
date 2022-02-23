@@ -1,6 +1,5 @@
 import datetime
 
-from django.conf import settings
 from django.shortcuts import render
 from products.models import Product, ProductCategory
 
@@ -16,7 +15,6 @@ def index(request):
 
 
 def products(request):
-    productsj = settings.BASE_DIR / 'products/fixtures/Products.json'
     context = {'title': 'bm - Каталог',
                # 'products': [
                #     {'name': 'Тим №35 25 кг', 'price': 360, 'availability': "Есть в наличии",
