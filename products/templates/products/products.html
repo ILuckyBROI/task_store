@@ -4,7 +4,9 @@
 {% block css %}
 <link href="{% static '/css/products.css' %}" rel="stylesheet">
 {% endblock %}
-
+{% block time %}
+<h4 class="header">Сайту = {{ start|timesince:now }}</h4>
+{% endblock %}
 {% block content %}
 <!-- Page Content -->
 <div class="container">
