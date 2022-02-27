@@ -4,7 +4,9 @@
 {% block css %}
 <link href="{% static '/css/products.css' %}" rel="stylesheet">
 {% endblock %}
-
+{% block time %}
+<h4 class="header">Сайту = {{ start|timesince:now }}</h4>
+{% endblock %}
 {% block content %}
 <!-- Page Content -->
 <div class="container">
@@ -96,7 +98,9 @@
                             <p class="card-text">{{ product.availability }}</p>
                         </div>
                         <div class="card-footer text-center">
-                            <button type="button" class="btn btn-outline-success">Отправить в корзину</button>
+                            <a href="{% url 'baskets:basket_add' product.id %}" class="btn btn-outline-success">
+                                Отправить в корзину
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -4,7 +4,9 @@
 {% block css %}
 <link href="{% static '/css/index.css' %}" rel="stylesheet">
 {% endblock %}
-
+{% block time %}
+<h4 class="header">Сайту = {{ start|timesince:now }}</h4>
+{% endblock %}
 {% block content %}
 <section>
     <!--    <div class="alert alert-light text-center" role="alert">-->
