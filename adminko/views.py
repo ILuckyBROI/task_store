@@ -1,20 +1,24 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import user_passes_test
 from users.models import User
 from adminko.forms import UserAdminkoRegistrationForm, UserAdminkoProfileForm
 
 
+@user_passes_test(lambda u: u.is_staff)
 def index(request):
     context = {'title': 'Adminko'}
     return render(request, 'adminko/index.html', context)
 
 
+@user_passes_test(lambda u: u.is_staff)
 def adminko_users(requset):
     users = User.objects.all()
     context = {'title': 'Adminko', 'users': users}
     return render(requset, 'adminko/admin-users-read.html', context)
 
 
+@user_passes_test(lambda u: u.is_staff)
 def adminko_users_create(request):
     if request.method == 'POST':
         form = UserAdminkoRegistrationForm(data=request.POST, files=request.FILES)
@@ -27,6 +31,7 @@ def adminko_users_create(request):
     return render(request, 'adminko/admin-users-create.html', context)
 
 
+@user_passes_test(lambda u: u.is_staff)
 def adminko_users_update(request, pk):
     selected_user = User.objects.get(id=pk)
     if request.method == 'POST':
@@ -40,12 +45,14 @@ def adminko_users_update(request, pk):
     return render(request, 'adminko/admin-users-update-delete.html', context)
 
 
+@user_passes_test(lambda u: u.is_staff)
 def adminko_users_delete(request, pk):
     user = User.objects.get(id=pk)
     user.safe_delete()
     return HttpResponseRedirect(reverse('adminko:adminko_users'))
 
 
+@user_passes_test(lambda u: u.is_staff)
 def adminko_users_active(request, pk):
     user = User.objects.get(id=pk)
     user.safe_active()
