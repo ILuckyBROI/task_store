@@ -14,6 +14,7 @@
           crossorigin="anonymous"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"
             crossorigin="anonymous"></script>
+    <link rel="icon" href="{% static '/vendor/img/favicon.ico' %}" type="image/x-icon">
 </head>
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -53,13 +54,13 @@
                         </div>
                         Пользователи
                     </a>
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="{% url 'adminko:adminko_categories' %}">
                         <div class="sb-nav-link-icon">
                             <i class="fas fa-shopping-basket"></i>
                         </div>
                         Категории
                     </a>
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="{% url 'adminko:adminko_products' %}">
                         <div class="sb-nav-link-icon">
                             <i class="fas fa-tshirt"></i>
                         </div>
