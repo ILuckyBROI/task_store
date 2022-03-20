@@ -16,13 +16,13 @@
         <form action="{% url 'adminko:adminko_products_create' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="form-group">
-                        <label class="small mb-1" for="{{ form.name.id_for_label }}">Наименование продукта</label>
+                        <label class="small mb-1" for="{{ forms.name.id_for_label }}">Наименование продукта</label>
                         {{ form.name }}
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <div class="form-group">
                         <label class="small mb-1" for="{{ form.category.id_for_label }}">Категория</label>
                         {{ form.category }}
@@ -32,8 +32,8 @@
             <div class="form-row mb-2">
                 <div class="col-lg-12">
                     <div class="custom-file">
-                        {{ form.avatar }}
-                        <label class="custom-file-label" for="{{ form.avatar.id_for_label }}">Выберите
+                        {{ form.image }}
+                        <label class="custom-file-label" for="{{ form.image.id_for_label }}">Выберите
                             изображение</label>
                     </div>
                 </div>
