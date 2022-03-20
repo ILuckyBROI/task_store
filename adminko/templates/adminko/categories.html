@@ -14,7 +14,7 @@
                 {% for category in categories %}
                 <tr>
                     <td>
-                        <a href="#" style="color: dodgerblue">
+                        <a href="{% url 'adminko:adminko_categories_update' category.id %}" style="color: dodgerblue">
                             {{ category.name }}
                         </a>
                     </td>
@@ -25,7 +25,7 @@
         </div>
     </div>
     <div class="card-footer">
-        <a href="#">
+        <a href="{% url 'adminko:adminko_categories_create' %}">
             <button class="btn btn-success">Добавить категорию</button>
         </a>
     </div>
