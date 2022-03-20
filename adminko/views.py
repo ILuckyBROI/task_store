@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import user_passes_test
+from django.utils.decorators import method_decorator
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from users.models import User
@@ -23,6 +24,10 @@ class UserAdminkoListView(ListView):
         context['title'] = 'Adminko'
         return context
 
+    @method_decorator(user_passes_test(lambda u: u.is_staff))
+    def dispatch(self, request, *args, **kwargs):
+        return super(UserAdminkoListView, self).dispatch(request, *args, **kwargs)
+
 
 class UserAdminkoCreateView(CreateView):
     model = User
@@ -35,6 +40,10 @@ class UserAdminkoCreateView(CreateView):
         context['title'] = 'Adminko'
         return context
 
+    @method_decorator(user_passes_test(lambda u: u.is_staff))
+    def dispatch(self, request, *args, **kwargs):
+        return super(UserAdminkoCreateView, self).dispatch(request, *args, **kwargs)
+
 
 class UserAdminkoUpdateView(UpdateView):
     model = User
@@ -46,6 +55,10 @@ class UserAdminkoUpdateView(UpdateView):
         context = super(UserAdminkoUpdateView, self).get_context_data(object_list=None, **kwargs)
         context['title'] = 'Adminko'
         return context
+
+    @method_decorator(user_passes_test(lambda u: u.is_staff))
+    def dispatch(self, request, *args, **kwargs):
+        return super(UserAdminkoUpdateView, self).dispatch(request, *args, **kwargs)
 
 
 class UserAdminkoDeleteView(DeleteView):
@@ -66,7 +79,7 @@ class UserAdminkoActiveView(DeleteView):
     template_name = 'adminko/admin-users-update-delete.html'
     success_url = reverse_lazy('adminko:adminko_users')
 
-    def delete(self, request, *args, **kwargs):
+    def active(self, request, *args, **kwargs):
         self.object = self.get_object()
         self.object.safe_active()
         return HttpResponseRedirect(self.success_url)
@@ -75,50 +88,56 @@ class UserAdminkoActiveView(DeleteView):
 # Не работает?
 
 # @user_passes_test(lambda u: u.is_staff)
-# def adminko_users_delete(request, pk):
+# def adminko_users_active(request, pk):
 #     user = User.objects.get(id=pk)
-#     user.safe_delete()
+#     user.safe_active()
 #     return HttpResponseRedirect(reverse('adminko:adminko_users'))
 
 
-@user_passes_test(lambda u: u.is_staff)
-def adminko_users_active(request, pk):
-    user = User.objects.get(id=pk)
-    user.safe_active()
-    return HttpResponseRedirect(reverse('adminko:adminko_users'))
+class CategoriesAdminkoListView(ListView):
+    model = ProductCategory
+    template_name = 'adminko/categories.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CategoriesAdminkoListView, self).get_context_data(object_list=None, **kwargs)
+        context['title'] = 'Adminko'
+        context['categories'] = ProductCategory.objects.all()
+        return context
+
+    @method_decorator(user_passes_test(lambda u: u.is_staff))
+    def dispatch(self, request, *args, **kwargs):
+        return super(CategoriesAdminkoListView, self).dispatch(request, *args, **kwargs)
 
 
-@user_passes_test(lambda u: u.is_staff)
-def adminko_categories(request):
-    context = {'title': 'Adminko',
-               'categories': ProductCategory.objects.all(),
-               }
-    return render(request, 'adminko/categories.html', context)
+class CategoriesAdminkoCreateView(CreateView):
+    form_class = CategoryForm
+    template_name = 'adminko/admin-categories-create.html'
+    success_url = reverse_lazy('adminko:adminko_categories')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CategoriesAdminkoCreateView, self).get_context_data(object_list=None, **kwargs)
+        context['title'] = 'Adminko'
+        return context
+
+    @method_decorator(user_passes_test(lambda u: u.is_staff))
+    def dispatch(self, request, *args, **kwargs):
+        return super(CategoriesAdminkoCreateView, self).dispatch(request, *args, **kwargs)
 
 
-@user_passes_test(lambda u: u.is_staff)
-def adminko_categories_create(request):
-    if request.method == 'POST':
-        form = CategoryForm(data=request.POST)
-        form.save()
-        return HttpResponseRedirect(reverse('adminko:adminko_categories'))
-    else:
-        form = CategoryForm()
-    context = {'title': 'Adminko', 'form': form}
-    return render(request, 'adminko/admin-categories-create.html', context)
+class CategoriesAdminkoUpdateView(UpdateView):
+    model = ProductCategory
+    form_class = CategoryForm
+    template_name = 'adminko/admin-categories-update-delete.html'
+    success_url = reverse_lazy('adminko:adminko_categories')
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CategoriesAdminkoUpdateView, self).get_context_data(object_list=None, **kwargs)
+        context['title'] = 'Adminko'
+        return context
 
-@user_passes_test(lambda u: u.is_staff)
-def adminko_categories_update(request, pk):
-    selected_category = ProductCategory.objects.get(id=pk)
-    if request.method == 'POST':
-        form = CategoryForm(instance=selected_category, data=request.POST)
-        form.save()
-        return HttpResponseRedirect(reverse('adminko:adminko_categories'))
-    else:
-        form = CategoryForm(instance=selected_category)
-    context = {'title': 'Adminko', 'selected_category': selected_category, 'form': form}
-    return render(request, 'adminko/admin-categories-update-delete.html', context)
+    @method_decorator(user_passes_test(lambda u: u.is_staff))
+    def dispatch(self, request, *args, **kwargs):
+        return super(CategoriesAdminkoUpdateView, self).dispatch(request, *args, **kwargs)
 
 
 @user_passes_test(lambda u: u.is_staff)
@@ -203,5 +222,48 @@ def adminko_products_delete(request, pk):
 
 # Delete
 
+# @user_passes_test(lambda u: u.is_staff)
+# def adminko_users_delete(request, pk):
+#     user = User.objects.get(id=pk)
+#     user.safe_delete()
+#     return HttpResponseRedirect(reverse('adminko:adminko_users'))
 
 # Activate
+
+
+# @user_passes_test(lambda u: u.is_staff)
+# def adminko_categories_create(request):
+#     if request.method == 'POST':
+#         form = CategoryForm(data=request.POST)
+#         form.save()
+#         return HttpResponseRedirect(reverse('adminko:adminko_categories'))
+#     else:
+#         form = CategoryForm()
+#     context = {'title': 'Adminko', 'form': form}
+#     return render(request, 'adminko/admin-categories-create.html', context)
+
+
+# @user_passes_test(lambda u: u.is_staff)
+# def adminko_categories(request):
+#     context = {'title': 'Adminko',
+#                'categories': ProductCategory.objects.all(),
+#                }
+#     return render(request, 'adminko/categories.html', context)
+
+# @user_passes_test(lambda u: u.is_staff)
+# def adminko_categories_update(request, pk):
+#     selected_category = ProductCategory.objects.get(id=pk)
+#     if request.method == 'POST':
+#         form = CategoryForm(instance=selected_category, data=request.POST)
+#         form.save()
+#         return HttpResponseRedirect(reverse('adminko:adminko_categories'))
+#     else:
+#         form = CategoryForm(instance=selected_category)
+#     context = {'title': 'Adminko', 'selected_category': selected_category, 'form': form}
+#     return render(request, 'adminko/admin-categories-update-delete.html', context)
+
+# @user_passes_test(lambda u: u.is_staff)
+# def adminko_categories_delete(request, pk):
+#     category = ProductCategory.objects.get(id=pk)
+#     category.delete()
+#     return HttpResponseRedirect(reverse('adminko:adminko_categories'))
