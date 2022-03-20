@@ -14,7 +14,11 @@ def index(request):
     return render(request, 'products/index.html', context)
 
 
-def products(request):
+def products(request, category_id=None):
+    if category_id:
+        products = Product.objects.filter(category_id=category_id)
+    else:
+        products = Product.objects.all()
     context = {'title': 'bm - Каталог',
                # 'products': [
                #     {'name': 'Тим №35 25 кг', 'price': 360, 'availability': "Есть в наличии",
@@ -36,9 +40,8 @@ def products(request):
                #            {'name': 'Строительные расходные материалы'}, {'name': 'Электротовары'},
                #            ],
                'groups': ProductCategory.objects.all(),
-               'products': Product.objects.all(),
+               'products': products,
                'start': datetime.datetime(2022, 2, 3, 19, 0),
                'now': datetime.datetime.now(),
                }
-
     return render(request, 'products/products.html', context)
