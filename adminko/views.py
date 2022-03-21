@@ -147,36 +147,51 @@ def adminko_categories_delete(request, pk):
     return HttpResponseRedirect(reverse('adminko:adminko_categories'))
 
 
-@user_passes_test(lambda u: u.is_staff)
-def adminko_products(request):
-    products = Product.objects.all()
-    context = {'title': 'Adminko', 'products': products}
-    return render(request, 'adminko/products.html', context)
+class ProductsAdminkoListView(ListView):
+    model = Product
+    template_name = 'adminko/products.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ProductsAdminkoListView, self).get_context_data(object_list=None, **kwargs)
+        context['title'] = 'Adminko'
+        context['products'] = Product.objects.all()
+        return context
+
+    @method_decorator(user_passes_test(lambda u: u.is_staff))
+    def dispatch(self, request, *args, **kwargs):
+        return super(ProductsAdminkoListView, self).dispatch(request, *args, **kwargs)
 
 
-@user_passes_test(lambda u: u.is_staff)
-def adminko_products_create(request):
-    if request.method == 'POST':
-        form = ProductForm(data=request.POST, files=request.FILES)
-        form.save()
-        return HttpResponseRedirect(reverse('adminko:adminko_products'))
-    else:
-        form = ProductForm()
-    context = {'title': 'Adminko', 'form': form, 'categories': ProductCategory.objects.all()}
-    return render(request, 'adminko/admin-product-create.html', context)
+class ProductsAdminkoCreateView(CreateView):
+    form_class = ProductForm
+    template_name = 'adminko/admin-product-create.html'
+    success_url = reverse_lazy('adminko:adminko_products')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ProductsAdminkoCreateView, self).get_context_data(object_list=None, **kwargs)
+        context['title'] = 'Adminko'
+        context['categories'] = ProductCategory.objects.all()
+        return context
+
+    @method_decorator(user_passes_test(lambda u: u.is_staff))
+    def dispatch(self, request, *args, **kwargs):
+        return super(ProductsAdminkoCreateView, self).dispatch(request, *args, **kwargs)
 
 
-@user_passes_test(lambda u: u.is_staff)
-def adminko_products_update(request, pk):
-    selected_product = Product.objects.get(id=pk)
-    if request.method == 'POST':
-        form = ProductForm(instance=selected_product, files=request.FILES, data=request.POST)
-        form.save()
-        return HttpResponseRedirect(reverse('adminko:adminko_products'))
-    else:
-        form = ProductForm(instance=selected_product)
-    context = {'title': 'Adminko', 'selected_product': selected_product, 'form': form}
-    return render(request, 'adminko/admin-product-update-delete.html', context)
+class ProductAdminkoUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'adminko/admin-product-update-delete.html'
+    success_url = reverse_lazy('adminko:adminko_products')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ProductAdminkoUpdateView, self).get_context_data(object_list=None, **kwargs)
+        context['title'] = 'Adminko'
+        return context
+
+    @method_decorator(user_passes_test(lambda u: u.is_staff))
+    def dispatch(self, request, *args, **kwargs):
+        return super(ProductAdminkoUpdateView, self).dispatch(request, *args, **kwargs)
 
 
 @user_passes_test(lambda u: u.is_staff)
@@ -263,7 +278,30 @@ def adminko_products_delete(request, pk):
 #     return render(request, 'adminko/admin-categories-update-delete.html', context)
 
 # @user_passes_test(lambda u: u.is_staff)
-# def adminko_categories_delete(request, pk):
-#     category = ProductCategory.objects.get(id=pk)
-#     category.delete()
-#     return HttpResponseRedirect(reverse('adminko:adminko_categories'))
+# def adminko_products(request):
+#     products = Product.objects.all()
+#     context = {'title': 'Adminko', 'products': products}
+#     return render(request, 'adminko/products.html', context)
+
+# @user_passes_test(lambda u: u.is_staff)
+# def adminko_products_create(request):
+#     if request.method == 'POST':
+#         form = ProductForm(data=request.POST, files=request.FILES)
+#         form.save()
+#         return HttpResponseRedirect(reverse('adminko:adminko_products'))
+#     else:
+#         form = ProductForm()
+#     context = {'title': 'Adminko', 'form': form, 'categories': ProductCategory.objects.all()}
+#     return render(request, 'adminko/admin-product-create.html', context)
+
+# @user_passes_test(lambda u: u.is_staff)
+# def adminko_products_update(request, pk):
+#     selected_product = Product.objects.get(id=pk)
+#     if request.method == 'POST':
+#         form = ProductForm(instance=selected_product, files=request.FILES, data=request.POST)
+#         form.save()
+#         return HttpResponseRedirect(reverse('adminko:adminko_products'))
+#     else:
+#         form = ProductForm(instance=selected_product)
+#     context = {'title': 'Adminko', 'selected_product': selected_product, 'form': form}
+#     return render(request, 'adminko/admin-product-update-delete.html', context)

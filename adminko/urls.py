@@ -6,7 +6,7 @@ from adminko.views import index, UserAdminkoListView, UserAdminkoCreateView, Use
 from adminko.views import CategoriesAdminkoListView, CategoriesAdminkoCreateView, CategoriesAdminkoUpdateView, \
     adminko_categories_delete
 
-from adminko.views import adminko_products, adminko_products_create, adminko_products_update, adminko_products_delete
+from adminko.views import ProductsAdminkoListView, ProductsAdminkoCreateView, ProductAdminkoUpdateView, adminko_products_delete
 
 app_name = 'admin'
 urlpatterns = [
@@ -20,8 +20,8 @@ urlpatterns = [
     path('category-create/', CategoriesAdminkoCreateView.as_view(), name='adminko_categories_create'),
     path('category-update/<int:pk>/', CategoriesAdminkoUpdateView.as_view(), name='adminko_categories_update'),
     path('category-delete/<int:pk>/', adminko_categories_delete, name='adminko_categories_delete'),
-    path('products/', adminko_products, name='adminko_products'),
-    path('product-create/', adminko_products_create, name='adminko_products_create'),
-    path('product-update/<int:pk>/', adminko_products_update, name='adminko_products_update'),
+    path('products/', ProductsAdminkoListView.as_view(), name='adminko_products'),
+    path('product-create/', ProductsAdminkoCreateView.as_view(), name='adminko_products_create'),
+    path('product-update/<int:pk>/', ProductAdminkoUpdateView.as_view(), name='adminko_products_update'),
     path('product-delete/<int:pk>/', adminko_products_delete, name='adminko_products_delete'),
 ]

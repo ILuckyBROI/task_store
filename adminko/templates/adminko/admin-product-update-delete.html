@@ -3,9 +3,9 @@
 {% block content %}
 <main>
     <div class="container-fluid">
-        <h1 class="mt-4">Редактирование продукта | {{ selected_product.name }}</h1>
+        <h1 class="mt-4">Редактирование продукта | {{ object.name }}</h1>
         <div class="card-body">
-            <form action="{% url 'adminko:adminko_products_update' selected_product.id %}" method="post"
+            <form action="{% url 'adminko:adminko_products_update' object.id %}" method="post"
                   enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-row">
@@ -55,7 +55,7 @@
             </form>
             <div class="row">
                 <div class="col-lg-12" style="margin-top: 33px;">
-                    <a href="{% url 'adminko:adminko_products_delete' selected_product.id %}"
+                    <a href="{% url 'adminko:adminko_products_delete' object.id %}"
                        class="btn btn-danger btn-block">
                         Удалить
                     </a>
