@@ -1,0 +1,73 @@
+{% extends 'products/base.html' %}
+{% load static %}
+
+{% block css %}
+<link href="{% static '/css/products.css' %}" rel="stylesheet">
+{% endblock %}
+{% block time %}
+<h4 class="header">Сайту = {{ start|timesince:now }}</h4>
+{% endblock %}
+{% block basket %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'products:basket' %}">Корзина<i class="fas fa-shopping-cart"></i>
+    </a>
+</li>
+{% endblock %}
+
+{% block content%}
+<div class="basket_list">
+    {% if baskets %}
+    <h4 class="mt-3 mb-3 d-flex justify-content-between align-items-center mb-3">
+        Корзина <span class="badge badge-secondary badge-pill">{{ baskets.0.total_quantity }}</span>
+    </h4>
+    {% for basket in baskets %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ basket.product.name }}</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-light">
+                <div class="row text-center">
+                    <div class="col-lg-4">
+                        Цена за единицу товара: {{ basket.product.price }} руб.
+                    </div>
+                    <p>Количество товара:</p>
+                    <div class="col-lg-2">
+                        <input name="{{ basket.id }}" type="number" class="form-control"
+                               value="{{ basket.quantity }}" min="0">
+                    </div>
+                    <div class="col-lg-2">{{ basket.sum }} руб.</div>
+                    <div class="col-lg-2">
+                        <a href="{% url 'baskets:basket_remove' basket.id %}">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    {% endfor %}
+    <div class="card mb-3">
+        <div class="card-footer">
+            <h4 class="float-left">Итого</h4>
+            <h4 class="float-right">{{ baskets.0.total_sum }} руб.</h4>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="nav-link">
+            <a class="btn btn-success btn-block" href="../orders/checkout_order.html">
+                Оформить заказ
+            </a>
+        </div>
+    </div>
+    {% else %}
+    <h4 class="mt-3 mb-3 text-center">
+        Корзина пуста
+    </h4>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/basket.js' %}"></script>
+{% endblock %}

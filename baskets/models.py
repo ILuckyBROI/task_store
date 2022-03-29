@@ -22,3 +22,7 @@ class Baskets(models.Model):
     def total_sum(self):
         baskets = Baskets.objects.filter(user=self.user)
         return sum(basket.sum() for basket in baskets)
+
+    class Meta:
+        verbose_name = 'корзина'
+        verbose_name_plural = 'корзины'
