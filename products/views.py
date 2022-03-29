@@ -1,5 +1,5 @@
 import datetime
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from products.models import Product, ProductCategory
 
@@ -14,7 +14,19 @@ def index(request):
     return render(request, 'products/index.html', context)
 
 
-def products(request):
+def products(request, category_id=None, page=1):
+    if category_id:
+        products = Product.objects.filter(category_id=category_id)
+    else:
+        products = Product.objects.all()
+
+    paginator = Paginator(products, 2)
+    try:
+        products_paginator = paginator.page(page)
+    except PageNotAnInteger:
+        products_paginator = paginator.page(1)
+    except EmptyPage:
+        products_paginator = paginator.page(paginator.num_pages)
     context = {'title': 'bm - Каталог',
                # 'products': [
                #     {'name': 'Тим №35 25 кг', 'price': 360, 'availability': "Есть в наличии",
@@ -36,9 +48,8 @@ def products(request):
                #            {'name': 'Строительные расходные материалы'}, {'name': 'Электротовары'},
                #            ],
                'groups': ProductCategory.objects.all(),
-               'products': Product.objects.all(),
+               'products': products_paginator,
                'start': datetime.datetime(2022, 2, 3, 19, 0),
                'now': datetime.datetime.now(),
                }
-
     return render(request, 'products/products.html', context)
