@@ -3,8 +3,29 @@ from django.contrib import auth
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+# from django.views import View
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from baskets.models import Baskets
+
+
+# class LoginView(View):
+#
+#     def get(self, request):
+#         form = UserLoginForm(data=request.POST)
+#         if form.is_valid():
+#             username = request.POST['username']
+#             password = request.POST['password']
+#             user = auth.authenticate(username=username, password=password)
+#             if user and user.is_active:
+#                 auth.login(request, user)
+#                 return HttpResponseRedirect(reverse('index'))
+#         context = {'title': 'BM - Авторизация', 'form': form}
+#         return render(request, 'users/login.html', context)
+#
+#     def post(self, request):
+#         form = UserLoginForm()
+#         context = {'title': 'BM - Авторизация', 'form': form}
+#         return render(request, 'users/login.html', context)
 
 
 def login(request):
