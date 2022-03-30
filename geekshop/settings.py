@@ -141,7 +141,7 @@ EMAIL_HOST_PASSWORD = 'geekshop'
 EMAIL_USE_SSL = False
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = 'tmp/email-messages/'
+EMAIL_FILE_PATH = BASE_DIR / 'email-messages/'
 
 
 
