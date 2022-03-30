@@ -94,8 +94,7 @@ def verify(request, username, activate_key):
             return render(request, 'users/verification.html', context)
     except Exception as e:
         pass
-    else:
-        return render(request, 'users/verification.html', context)
+    return render(request, 'users/verification.html', context)
 
 
 def registration(request):
