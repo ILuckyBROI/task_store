@@ -22,37 +22,17 @@
                     </thead>
                     <tbody>
                     {% for order in object_list %}
-                    <tr>
+                    <tr class="{% if order.status == order.PAID %} table-success {% elif order.status == order.CANCEL %} table-danger {% elif order.status == order.PROCEEDED %} table-info {% elif order.status == order.READY %} table-warning {% endif %}">
                         <th scope="row">{{ order.pk}}</th>
-                        <td>{{ order.status }}</td>
+                        <td>{{ order.get_status_display }}</td>
                         <td>{{ order.created }}</td>
                         <td>{{ order.updated }}</td>
-                        <td>Вывести сумму! {{ total_sum }}</td>
+                        <td>{{ order.total_cost }}</td>
                         <td>
                             <a href="{% url 'orders:order' order.pk %}">Просмотреть</a>
                         </td>
                     </tr>
                     {% endfor %}
-                    <tr class="table-success">
-                        <th scope="row">2</th>
-                        <td>Досталвен</td>
-                        <td>16 июля 21 года</td>
-                        <td>16 июля 21 года</td>
-                        <td>4 876 руб.</td>
-                        <td>
-                            <a href="">просмотреть</a>
-                        </td>
-                    </tr>
-                    <tr class="table-info">
-                        <th scope="row">3</th>
-                        <td>В пути</td>
-                        <td>14 нояб. 21 года</td>
-                        <td>14 нояб. 21 года</td>
-                        <td>9 566 руб.</td>
-                        <td>
-                            <a href="">просмотреть</a>
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
             </div>

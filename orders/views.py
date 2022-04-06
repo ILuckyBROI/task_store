@@ -69,9 +69,8 @@ class OrderCreateView(CreateView):
         return super(OrderCreateView, self).form_valid(form)
 
 
-class OrderReadView(ListView):
-    model = OrderItem
-    form_class = OrderItemForm
+class OrderReadView(DetailView):
+    model = Order
     template_name = 'orders/order.html'
 
     def get_context_data(self, **kwargs):
@@ -88,8 +87,8 @@ class OrderDeleteView(DeleteView):
 
 
 # не вызывается? обновляет статус на отправлен в обработку
-def order_forming_complete(request):
-    order = get_object_or_404(Order)
+def order_forming_complete(request, pk):
+    order = get_object_or_404(Order, pk=pk)
     order.status = Order.SENT_TO_PROCEED
     order.save()
     return HttpResponseRedirect(reverse('orders:orders'))

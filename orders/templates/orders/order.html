@@ -7,7 +7,7 @@
 <section>
     <div class="container">
         <div class="text-center mt-5">
-            <h1>Заказ № {{ form.pk }}</h1>
+            <h1>Заказ № {{ object.pk }}</h1>
             <div class="orders mt-5">
                 <table class="table">
                     <thead>
@@ -19,28 +19,17 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {% for orderitem in object.order_items.all %}
                     <tr>
-                        <th scope="row">{{ form.product }}</th>
-                        <td>{{ form.quantity }}</td>
-                        <td>{{ form.price }}</td>
-                        <td>360,00 руб.</td>
+                        <th scope="row">{{ orderitem.product.name }}</th>
+                        <td>{{ orderitem.quantity }}</td>
+                        <td>{{ orderitem.product.price }}</td>
+                        <td>{{ orderitem.product_cost }}</td>
                     </tr>
-                    <tr>
-                        <th scope="row">
-                            Ударная дрель ЗУБР ДУ-810
-                        </th>
-                        <td>1</td>
-                        <td>3230,00 руб.</td>
-                        <td>3230,00 руб.</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            {{ form }}
-                        </th>
-                    </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
-                <p class="float-right h4 mt-3">Итого 7588,00 руб.</p>
+                <p class="float-right h4 mt-3">Итого {{ object.total_cost }} руб.</p>
             </div>
         </div>
     </div>

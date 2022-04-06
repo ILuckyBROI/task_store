@@ -62,24 +62,24 @@ class Order(models.Model):
         items = self.orderitems.select_related()
         return len(items)
 
+    @property
+    def total_cost(self):
+        items = self.order_items.all()
+        return sum(list(map(lambda x: x.product_cost, items)))
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='order_items', verbose_name='элемент заказа',
                               on_delete=models.CASCADE)
     product = models.ForeignKey(Product, verbose_name='продукт', on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(verbose_name='количество', default=0)
+    quantity = models.PositiveIntegerField(verbose_name='количество', default=1)
 
-    def get_product_cost(self):
+    @property
+    def product_cost(self):
         return self.product.price * self.quantity
 
     def __str__(self):
         return format(self.product)
-
-    # в том ли направлении?
-    def get_total_cost(self):
-        total = 0
-        total = self.get_product_cost() + total
-        return total
 
     class Meta:
         verbose_name = 'элемент заказа'
