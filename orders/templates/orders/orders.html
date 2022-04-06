@@ -1,0 +1,62 @@
+{% extends 'orders/base.html' %}
+{% load static %}
+{% block css %}
+<link href=" {% static '/css/orders.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<section>
+    <div class="container">
+        <div class="text-center mt-5">
+            <h1>Заказы {{ user.username }}</h1>
+            <div class="orders mt-5">
+                <table class="table">
+                    <thead>
+                    <tr class="table-light">
+                        <th scope="col">#</th>
+                        <th scope="col">Статус</th>
+                        <th scope="col">Создан</th>
+                        <th scope="col">Обновлен</th>
+                        <th scope="col">Итого</th>
+                        <th scope="col">Действие</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in object_list %}
+                    <tr>
+                        <th scope="row">{{ order.pk}}</th>
+                        <td>{{ order.status }}</td>
+                        <td>{{ order.created }}</td>
+                        <td>{{ order.updated }}</td>
+                        <td>Вывести сумму! {{ total_sum }}</td>
+                        <td>
+                            <a href="{% url 'orders:order' order.pk %}">Просмотреть</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="table-success">
+                        <th scope="row">2</th>
+                        <td>Досталвен</td>
+                        <td>16 июля 21 года</td>
+                        <td>16 июля 21 года</td>
+                        <td>4 876 руб.</td>
+                        <td>
+                            <a href="">просмотреть</a>
+                        </td>
+                    </tr>
+                    <tr class="table-info">
+                        <th scope="row">3</th>
+                        <td>В пути</td>
+                        <td>14 нояб. 21 года</td>
+                        <td>14 нояб. 21 года</td>
+                        <td>9 566 руб.</td>
+                        <td>
+                            <a href="">просмотреть</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
