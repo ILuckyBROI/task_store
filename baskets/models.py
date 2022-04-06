@@ -10,7 +10,7 @@ class Baskets(models.Model):
     created_timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Корзина для {self.user.username} | Продукт {self.product.name}'
+        return f'Корзина  {self.user.username}'
 
     def sum(self):
         return self.quantity * self.product.price
@@ -24,5 +24,5 @@ class Baskets(models.Model):
         return sum(basket.sum() for basket in baskets)
 
     class Meta:
-        verbose_name = 'корзина'
-        verbose_name_plural = 'корзины'
+        verbose_name = 'товар'
+        verbose_name_plural = 'корзина'
