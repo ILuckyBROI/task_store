@@ -19,6 +19,12 @@
                     <span class="badge badge-primary badge-pill text-white">{{ baskets.0.total_quantity }}</span>
                 </h4>
                 <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div><h6 class="my-0">Товар</h6></div>
+                        <div><h6 class="my-0">Цена</h6></div>
+                        <div><h6 class="my-0">Кол-во</h6></div>
+                        <div><h6 class="my-0">Сумма</h6></div>
+                    </li>
                     {% for basket in baskets %}
                     <li class="list-group-item d-flex justify-content-between lh-sm">
                         <div>
