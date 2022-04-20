@@ -1,0 +1,42 @@
+{% extends 'orders/base.html' %}
+{% load static %}
+{% block css %}
+<link href=" {% static '/css/orders.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<section>
+    <div class="container">
+        <div class="text-center mt-5">
+            <h1>Заказы {{ user.username }}</h1>
+            <div class="orders mt-5">
+                <table class="table">
+                    <thead>
+                    <tr class="table-light">
+                        <th scope="col">#</th>
+                        <th scope="col">Статус</th>
+                        <th scope="col">Создан</th>
+                        <th scope="col">Обновлен</th>
+                        <th scope="col">Итого</th>
+                        <th scope="col">Действие</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in object_list %}
+                    <tr class="{% if order.status == order.PAID %} table-success {% elif order.status == order.CANCEL %} table-danger {% elif order.status == order.PROCEEDED %} table-info {% elif order.status == order.READY %} table-warning {% endif %}">
+                        <th scope="row">{{ order.pk}}</th>
+                        <td>{{ order.get_status_display }}</td>
+                        <td>{{ order.created }}</td>
+                        <td>{{ order.updated }}</td>
+                        <td>{{ order.total_cost }}</td>
+                        <td>
+                            <a href="{% url 'orders:order' order.pk %}">Просмотреть</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

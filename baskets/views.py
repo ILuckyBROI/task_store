@@ -4,11 +4,14 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from products.models import Product
 from baskets.models import Baskets
-
+from django.contrib import messages
 
 @login_required
 def basket_add(request, product_id):
     product = Product.objects.get(id=product_id)
+    if product.quantity == 0:
+        messages.error(request, 'Данный товар закончился!')
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
     baskets = Baskets.objects.filter(user=request.user, product=product)
     if not baskets:
         Baskets.objects.create(user=request.user, product=product, quantity=1)

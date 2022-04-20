@@ -1,6 +1,7 @@
-from django.db import models
+from django.db import models, transaction
 from users.models import User
 from products.models import Product
+from django.shortcuts import get_object_or_404
 
 
 class Baskets(models.Model):
@@ -10,7 +11,7 @@ class Baskets(models.Model):
     created_timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Корзина для {self.user.username} | Продукт {self.product.name}'
+        return f'Корзина  {self.user.username}'
 
     def sum(self):
         return self.quantity * self.product.price
@@ -23,6 +24,25 @@ class Baskets(models.Model):
         baskets = Baskets.objects.filter(user=self.user)
         return sum(basket.sum() for basket in baskets)
 
+    @staticmethod
+    def get_item(pk):
+        return Baskets.objects.filter(id=pk).first()
+
+    def save(self, *args, **kwargs):
+        with transaction.atomic():
+            if self.pk:
+                self.product.quantity -= self.quantity - self.__class__.get_item(self.pk).quantity
+            else:
+                self.product.quantity -= self.quantity
+            self.product.save()
+            super(Baskets, self).save(*args, **kwargs)
+
+    @transaction.atomic
+    def delete(self, *args, **kwargs):
+        self.product.quantity += self.quantity
+        self.product.save()
+        super(Baskets, self).delete(*args, **kwargs)
+
     class Meta:
-        verbose_name = 'корзина'
-        verbose_name_plural = 'корзины'
+        verbose_name = 'товар'
+        verbose_name_plural = 'корзина'
