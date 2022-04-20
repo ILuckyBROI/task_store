@@ -24,7 +24,7 @@ class Product(models.Model):
     name = models.CharField(max_length=256, verbose_name='Товар')
     image = models.ImageField(upload_to='product_images', blank=True, null=True)
     availability = models.CharField(verbose_name='Наличие товара', max_length=20, choices=CHOOSING_AVAILABILITY,
-                                    default='Есть в наличии')
+                                    default=AVAILABLE_IN_STOCK)
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0, verbose_name='Цена')
     quantity = models.PositiveIntegerField(default=0, verbose_name='Количество')
     category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE, default='Новинки', verbose_name='Категория')
